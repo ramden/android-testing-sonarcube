@@ -1,55 +1,43 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
 apply plugin: 'com.justpinch.androidanalyzer'
 
 android {
     compileSdkVersion 28
+
+
     defaultConfig {
-        applicationId "com.example.testing"
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
     }
+
     buildTypes {
-        debug {
-            testCoverageEnabled true
-        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-
     testOptions {
         unitTests {
             includeAndroidResources = true
-            all {
-                jacoco {
-                    includeNoLocationClasses = true
-                }
-            }
         }
     }
 
-    useLibrary 'android.test.runner'
-    useLibrary 'android.test.base'
-    useLibrary 'android.test.mock'
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
     implementation 'androidx.appcompat:appcompat:1.0.2'
+
     implementation 'androidx.core:core-ktx:1.0.2'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 
     // Core library
     androidTestImplementation 'androidx.test:core:1.2.0'
@@ -98,14 +86,18 @@ dependencies {
     testImplementation "com.google.truth:truth:0.45"
 
     testImplementation 'org.robolectric:robolectric:4.3'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 
 androidAnalyzer {
-    applicationId = 'com.example.testing'
-    projectName = 'Testing app'
+    applicationId = 'com.example.examplelibrary'
+    projectName = 'Testing app (example library)'
     projectVersion = '1.0.0'
     detekt = true
     unitTestCoverage = true
-    packageName = 'com.example.testing'
+    packageName = 'com.example.examplelibrary'
     buildVariant = 'debug'
+}
+repositories {
+    mavenCentral()
 }
